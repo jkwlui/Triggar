@@ -14,26 +14,26 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.kinwa91.triggar.actions.BluetoothAction;
-import com.kinwa91.triggar.triggers.WifiTrigger;
+import com.kinwa91.triggar.actions.BrightnessAction;
+import com.kinwa91.triggar.triggers.BluetoothTrigger;
 
 import java.util.ArrayList;
 
 
 public class MyActivity extends Activity {
-
+    // fields
     private boolean isServiceRunning = false;
-    private Button b;
-    private Button checkButton;
-    private TextView checkText;
-
+    // instance of custom classes
     private ArrayList<Profile> profiles;
-
-    private String somethingNew;
-
+    // UI
+    private ListView listView;
+    // Handler for Service
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -64,46 +64,26 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-
-
-        checkText = (TextView) findViewById(R.id.checkText);
-        checkButton = (Button) findViewById(R.id.check);
-
-        b = (Button) findViewById(R.id.button);
-
         profiles = new ArrayList<Profile>();
         ArrayList<Trigger> t = new ArrayList<Trigger>();
-        Trigger wt = new WifiTrigger();
+        Trigger wt = new BluetoothTrigger();
         t.add(wt);
         ArrayList<Action> a = new ArrayList<Action>();
-        Action ba = new BluetoothAction();
+        Action ba = new BrightnessAction();
+        ba.setContext(getApplicationContext());
         a.add(ba);
+
         Profile p = new Profile(t, a);
         profiles.add(p);
 
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), BroadcastService.class);
-                intent.putExtra(BroadcastService.EXTRA_MESSENGER, new Messenger(handler));
-                if (isServiceRunning) {
-                    stopService(intent);
-                    b.setText("Start Service");
-                } else {
-                    startService(intent);
-                    b.setText("Stop Service");
-                }
-                isMyServiceRunning(BroadcastService.class);
-                Log.d("MyActivity", "Button clicked");
-            }
-        });
+        ListView listView = (ListView) findViewById(R.id.profileListView);
+        listView.setAdapter(null);
 
-        checkButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                isMyServiceRunning(BroadcastService.class);
-            }
-        });
+
+        // Launch Service
+
+        Intent intent = new Intent(getApplicationContext(), BroadcastService.class);
+        intent.putExtra(BroadcastService.EXTRA_MESSENGER, new Messenger(handler));
 
     }
 
@@ -112,12 +92,10 @@ public class MyActivity extends Activity {
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
                 isServiceRunning = true;
-                checkText.setText("Service is running");
                 return true;
             }
         }
         isServiceRunning = false;
-        checkText.setText("Service is NOT running");
         return false;
     }
 

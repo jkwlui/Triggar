@@ -1,5 +1,8 @@
 package com.kinwa91.triggar.actions;
 
+import android.content.Context;
+import android.net.wifi.WifiManager;
+
 import com.kinwa91.triggar.Action;
 
 /**
@@ -8,6 +11,7 @@ import com.kinwa91.triggar.Action;
 public class WifiAction extends Action {
     @Override
     public void execute() {
-
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        wifiManager.setWifiEnabled(true);
     }
 }

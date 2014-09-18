@@ -1,5 +1,9 @@
 package com.kinwa91.triggar.actions;
 
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
+
 import com.kinwa91.triggar.Action;
 
 /**
@@ -8,6 +12,8 @@ import com.kinwa91.triggar.Action;
 public class AlarmAction extends Action {
     @Override
     public void execute() {
-
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone r = RingtoneManager.getRingtone(context, notification);
+        r.play();
     }
 }
