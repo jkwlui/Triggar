@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.util.Log;
 
 import com.kinwa91.triggar.ProfileDb;
 import com.kinwa91.triggar.actions.AlarmAction;
@@ -123,6 +124,12 @@ public class ProfileDbExchanger  {
 
         cursor.close();
 
+        for (Profile p : profiles) {
+            if (p.getTriggers().size() != 0) {
+                Log.d("Profile: ", "has trigger");
+            }
+        }
+
         return profiles;
 
     }
@@ -143,9 +150,10 @@ public class ProfileDbExchanger  {
             do {
                 int id = cursor.getInt(cursor.getColumnIndex(ProfileDb.TRIGGER_ID));
                 String name = cursor.getString(cursor.getColumnIndex(ProfileDb.TRIGGER_NAME));
+                Log.d("ProfileDbExchanger", "Trigger names: " + name);
                 int state = cursor.getInt(cursor.getColumnIndex(ProfileDb.TRIGGER_STATE));
 
-                if (name == "Airplane") {
+                if (name.contains("Airplane")) {
                     AirplaneTrigger at = new AirplaneTrigger();
                     at.setState(state);
                     triggers.add(at);
@@ -170,12 +178,16 @@ public class ProfileDbExchanger  {
                     wt.setState(state);
                     triggers.add(wt);
                 }
+                Log.d("Trigger", "size:" + triggers.size());
             } while (cursor.moveToNext());
+            Log.d("Trigger", "size:" + triggers.size());
         }
         else {
             return null;
         }
         cursor.close();
+
+        Log.d("Trigger", "size:" + triggers.size());
 
         return triggers;
     }
@@ -196,6 +208,8 @@ public class ProfileDbExchanger  {
             do {
                 int id = cursor.getInt(cursor.getColumnIndex(ProfileDb.ACTION_ID));
                 String name = cursor.getString(cursor.getColumnIndex(ProfileDb.ACTION_NAME));
+
+                Log.d("ProfileDbExchanger", "Action names: " + name);
                 int state = cursor.getInt(cursor.getColumnIndex(ProfileDb.ACTION_STATE));
 
                 if (name == "Alarm") {
