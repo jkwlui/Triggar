@@ -10,18 +10,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-
-import com.kinwa91.triggar.actions.BrightnessAction;
-import com.kinwa91.triggar.triggers.BluetoothTrigger;
 
 import java.util.ArrayList;
 
@@ -86,7 +77,7 @@ public class MyActivity extends Activity {
         int trigger2Id = dbExchanger.createTrigger("Power", 1, profile2Id);
         int action2Id = dbExchanger.createAction("Brightness", 0, profile2Id);
 
-        profiles = dbExchanger.getAllProfile();
+        profiles = dbExchanger.getAllProfiles();
         dbExchanger.close();
 
 

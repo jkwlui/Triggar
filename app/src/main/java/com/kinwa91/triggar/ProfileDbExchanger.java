@@ -90,7 +90,7 @@ public class ProfileDbExchanger  {
             String name = cursor.getString(cursor.getColumnIndex(ProfileDb.PROFILE_NAME));
             int state = cursor.getInt(cursor.getColumnIndex(ProfileDb.PROFILE_STATE));
 
-            return new Profile(name, state, new ArrayList<Trigger>(), new ArrayList<Action>());
+            return new Profile(name, state, getAllTriggers(id), getAllActions(id));
         }
         else {
             return null;
@@ -98,7 +98,7 @@ public class ProfileDbExchanger  {
 
     }
 
-    public ArrayList<Profile> getAllProfile() {
+    public ArrayList<Profile> getAllProfiles() {
         ArrayList<Profile> profiles = new ArrayList<Profile>();
         Cursor cursor = null;
         try {
