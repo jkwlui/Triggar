@@ -32,7 +32,11 @@ public class ProfileDbExchanger  {
     private ProfileDb profileDb;
     private SQLiteDatabase db;
 
+    private Context mContext;
+
     public ProfileDbExchanger(Context context) {
+
+        this.mContext = context;
         this.profileDb = ProfileDb.getInstance(context);
     }
 
@@ -153,6 +157,8 @@ public class ProfileDbExchanger  {
                 Log.d("ProfileDbExchanger", "Trigger names: " + name);
                 int state = cursor.getInt(cursor.getColumnIndex(ProfileDb.TRIGGER_STATE));
 
+
+
                 if (name.contains("Airplane")) {
                     AirplaneTrigger at = new AirplaneTrigger();
                     at.setState(state);
@@ -212,31 +218,28 @@ public class ProfileDbExchanger  {
                 Log.d("ProfileDbExchanger", "Action names: " + name);
                 int state = cursor.getInt(cursor.getColumnIndex(ProfileDb.ACTION_STATE));
 
+                Action action = null;
+
                 if (name.contains("Alarm")) {
-                    AlarmAction aa = new AlarmAction();
-                    aa.setState(state);
-                    actions.add(aa);
+                    action = new AlarmAction();
                 } else if (name.contains("Brightness")) {
-                    BrightnessAction ba = new BrightnessAction();
-                    ba.setState(state);
-                    actions.add(ba);
+                    action = new BrightnessAction();
                 } else if (name.contains("Bluetooth")) {
-                    BluetoothAction ba = new BluetoothAction();
-                    ba.setState(state);
-                    actions.add(ba);
+                    action = new BluetoothAction();
                 } else if (name.contains("Music")) {
-                    MusicAction ma = new MusicAction();
-                    ma.setState(state);
-                    actions.add(ma);
+                    action = new MusicAction();
                 } else if (name.contains("Volume")) {
-                    VolumeAction va = new VolumeAction();
-                    va.setState(state);
-                    actions.add(va);
+                    action = new VolumeAction();
                 } else if (name.contains("Wifi")) {
-                    WifiAction wa = new WifiAction();
-                    wa.setState(state);
-                    actions.add(wa);
+                    action = new WifiAction();
                 }
+
+                if (action != null) {
+                    action.setState(state);
+                    action.setContext(mContext);
+                    actions.add(action);
+                }
+
             } while (cursor.moveToNext());
         }
         else {

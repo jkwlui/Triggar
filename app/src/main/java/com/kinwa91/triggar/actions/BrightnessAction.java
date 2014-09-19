@@ -18,7 +18,7 @@ public class BrightnessAction extends Action {
     }
     @Override
     public String getName() {
-        return context.getString(R.string.brightness_action);
+        return context.getResources().getString(R.string.brightness_action);
     }
 
 }

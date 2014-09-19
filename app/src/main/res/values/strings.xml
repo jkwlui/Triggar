@@ -7,7 +7,7 @@
     <string name="button">Start Service</string>
 
     <string name="alarm_action">Play Sound</string>
-    <string name="bluetooth_action">Set Bluetooth</string>
+    <string name="bluetooth_action">設定藍牙</string>
     <string name="brightness_action">Set Brightness</string>
     <string name="music_action">Music</string>
     <string name="volume_action">Set Volume</string>

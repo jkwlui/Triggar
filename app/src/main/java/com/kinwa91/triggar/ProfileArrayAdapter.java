@@ -1,6 +1,7 @@
 package com.kinwa91.triggar;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class ProfileArrayAdapter extends ArrayAdapter<Profile> {
         profileName.setText(profile.getName());
         List<Action> actionsList = profile.getActions();
         String actionsListText = "";
+        Log.d("Action size: ", ""+actionsList.size());
         for (Action a : actionsList)
             actionsListText = actionsListText + a.getName() + ", ";
         actions.setText(actionsListText);

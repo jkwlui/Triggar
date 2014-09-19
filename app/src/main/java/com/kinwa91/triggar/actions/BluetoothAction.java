@@ -21,6 +21,6 @@ public class BluetoothAction extends Action {
 
     @Override
     public String getName() {
-        return context.getString(R.string.bluetooth_action);
+        return context.getResources().getString(R.string.bluetooth_action);
     }
 }
