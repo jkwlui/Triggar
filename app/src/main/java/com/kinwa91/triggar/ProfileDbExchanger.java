@@ -114,7 +114,7 @@ public class ProfileDbExchanger  {
                 String name = cursor.getString(cursor.getColumnIndex(ProfileDb.PROFILE_NAME));
                 int state = cursor.getInt(cursor.getColumnIndex(ProfileDb.PROFILE_STATE));
 
-                profiles.add(new Profile(name, state, new ArrayList<Trigger>(), new ArrayList<Action>()));
+                profiles.add(new Profile(name, state, getAllTriggers(id), getAllActions(id)));
             } while (cursor.moveToNext());
         }
         else {
