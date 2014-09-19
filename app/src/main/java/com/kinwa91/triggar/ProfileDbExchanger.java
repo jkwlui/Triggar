@@ -98,7 +98,7 @@ public class ProfileDbExchanger  {
 
     }
 
-    public ArrayList<Profile> getAllProfile(int profileId) {
+    public ArrayList<Profile> getAllProfile() {
         ArrayList<Profile> profiles = new ArrayList<Profile>();
         Cursor cursor = null;
         try {
