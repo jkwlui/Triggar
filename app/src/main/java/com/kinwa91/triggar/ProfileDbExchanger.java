@@ -157,23 +157,23 @@ public class ProfileDbExchanger  {
                     AirplaneTrigger at = new AirplaneTrigger();
                     at.setState(state);
                     triggers.add(at);
-                } else if (name == "Battery") {
+                } else if (name.contains("Battery")) {
                     BatteryTrigger bt = new BatteryTrigger();
                     bt.setState(state);
                     triggers.add(bt);
-                } else if (name == "Bluetooth") {
+                } else if (name.contains("Bluetooth")) {
                     BluetoothTrigger bt = new BluetoothTrigger();
                     bt.setState(state);
                     triggers.add(bt);
-                } else if (name == "Headset") {
+                } else if (name.contains("Headset")) {
                     HeadsetTrigger ht = new HeadsetTrigger();
                     ht.setState(state);
                     triggers.add(ht);
-                } else if (name == "Power") {
+                } else if (name.contains("Power")) {
                     PowerTrigger pt = new PowerTrigger();
                     pt.setState(state);
                     triggers.add(pt);
-                } else if (name == "Wifi") {
+                } else if (name.contains("Wifi")) {
                     WifiTrigger wt = new WifiTrigger();
                     wt.setState(state);
                     triggers.add(wt);
@@ -212,27 +212,27 @@ public class ProfileDbExchanger  {
                 Log.d("ProfileDbExchanger", "Action names: " + name);
                 int state = cursor.getInt(cursor.getColumnIndex(ProfileDb.ACTION_STATE));
 
-                if (name == "Alarm") {
+                if (name.contains("Alarm")) {
                     AlarmAction aa = new AlarmAction();
                     aa.setState(state);
                     actions.add(aa);
-                } else if (name == "Brightness") {
+                } else if (name.contains("Brightness")) {
                     BrightnessAction ba = new BrightnessAction();
                     ba.setState(state);
                     actions.add(ba);
-                } else if (name == "Bluetooth") {
+                } else if (name.contains("Bluetooth")) {
                     BluetoothAction ba = new BluetoothAction();
                     ba.setState(state);
                     actions.add(ba);
-                } else if (name == "Music") {
+                } else if (name.contains("Music")) {
                     MusicAction ma = new MusicAction();
                     ma.setState(state);
                     actions.add(ma);
-                } else if (name == "Volume") {
+                } else if (name.contains("Volume")) {
                     VolumeAction va = new VolumeAction();
                     va.setState(state);
                     actions.add(va);
-                } else if (name == "Wifi") {
+                } else if (name.contains("Wifi")) {
                     WifiAction wa = new WifiAction();
                     wa.setState(state);
                     actions.add(wa);
