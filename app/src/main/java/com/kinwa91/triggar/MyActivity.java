@@ -64,21 +64,30 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-        profiles = new ArrayList<Profile>();
-        ArrayList<Trigger> t = new ArrayList<Trigger>();
-        Trigger wt = new BluetoothTrigger();
-        t.add(wt);
-        ArrayList<Action> a = new ArrayList<Action>();
-        Action ba = new BrightnessAction();
-        ba.setContext(getApplicationContext());
-        a.add(ba);
+//        profiles = new ArrayList<Profile>();
+//        ArrayList<Trigger> t = new ArrayList<Trigger>();
+//        Trigger wt = new BluetoothTrigger();
+//        t.add(wt);
+//        ArrayList<Action> a = new ArrayList<Action>();
+//        Action ba = new BrightnessAction();
+//        ba.setContext(getApplicationContext());
+//        a.add(ba);
+//
+//        Profile p = new Profile(t, a);
+//        profiles.add(p);
 
-        Profile p = new Profile(t, a);
-        profiles.add(p);
+        ProfileDbExchanger dbExchanger = new ProfileDbExchanger(this.getApplicationContext());
+        dbExchanger.open();
+        int profileId = dbExchanger.createProfile("Profile 1", 0);
+        int triggerId = dbExchanger.createTrigger("Wifi", 1, profileId);
+        int actionId = dbExchanger.createAction("Bluetooth", 0, profileId);
 
-        ListView listView = (ListView) findViewById(R.id.profileListView);
-        listView.setAdapter(null);
+        Profile testProfile = dbExchanger.getProfile(profileId);
+        dbExchanger.close();
 
+        if (testProfile != null) {
+            Log.d("testProfile", "id = " + profileId + " profile name: " + testProfile.getName() + " profile state: " + testProfile.getState());
+        }
 
         // Launch Service
 

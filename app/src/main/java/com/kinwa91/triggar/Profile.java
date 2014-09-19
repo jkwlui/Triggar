@@ -13,12 +13,15 @@ public class Profile {
 
     private ArrayList<Trigger> triggers;
     private ArrayList<Action> actions;
+    private String name;
+    private int state;
 
-    private boolean isEnabled = false;
     private boolean isTriggered = false;
 
 
-    public Profile(ArrayList<Trigger> triggers, ArrayList<Action> actions) {
+    public Profile(String name, int state, ArrayList<Trigger> triggers, ArrayList<Action> actions) {
+        this.name = name;
+        this.state = state;
         this.triggers = triggers;
         this.actions = actions;
     }
@@ -51,5 +54,9 @@ public class Profile {
                executeActions();
         }
     }
+
+    public String getName() { return name; }
+
+    public int getState() { return state; }
 
 }
