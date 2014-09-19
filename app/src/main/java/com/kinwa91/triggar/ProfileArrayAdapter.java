@@ -35,7 +35,7 @@ public class ProfileArrayAdapter extends ArrayAdapter<Profile> {
         List<Action> actionsList = profile.getActions();
         String actionsListText = "";
         for (Action a : actionsList)
-            actionsListText = actionsListText + ", ";
+            actionsListText = actionsListText + a.getName() + ", ";
         actions.setText(actionsListText);
         return convertView;
     }

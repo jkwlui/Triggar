@@ -78,17 +78,19 @@ public class MyActivity extends Activity {
 
         ProfileDbExchanger dbExchanger = new ProfileDbExchanger(this.getApplicationContext());
         dbExchanger.open();
-        int profileId = dbExchanger.createProfile("Profile 1", 0);
-        int triggerId = dbExchanger.createTrigger("Wifi", 1, profileId);
-        int actionId = dbExchanger.createAction("Bluetooth", 0, profileId);
+        int profile1Id = dbExchanger.createProfile("Profile 1", 0);
+        int trigger1Id = dbExchanger.createTrigger("Wifi", 1, profile1Id);
+        int action1Id = dbExchanger.createAction("Bluetooth", 0, profile1Id);
 
-        Profile testProfile = dbExchanger.getProfile(profileId);
+        int profile2Id = dbExchanger.createProfile("Profile 2", 0);
+        int trigger2Id = dbExchanger.createTrigger("Power", 1, profile2Id);
+        int action2Id = dbExchanger.createAction("Brightness", 0, profile2Id);
+
+        profiles = dbExchanger.getAllProfile();
         dbExchanger.close();
 
-        ArrayList<Profile> testProfiles = new ArrayList<Profile>();
-        testProfiles.add(testProfile);
 
-        ProfileArrayAdapter adapter = new ProfileArrayAdapter(this, R.layout.profile_list_item, testProfiles);
+        ProfileArrayAdapter adapter = new ProfileArrayAdapter(this, R.layout.profile_list_item, profiles);
 
         listView = (ListView) findViewById(R.id.profile_listview);
         listView.setAdapter(adapter);
