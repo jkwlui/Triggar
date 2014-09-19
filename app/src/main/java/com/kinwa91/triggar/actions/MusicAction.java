@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 
 import com.kinwa91.triggar.Action;
+import com.kinwa91.triggar.R;
 
 /**
  * Created by kinwa91 on 2014-09-16.
@@ -28,5 +29,9 @@ public class MusicAction extends Action {
         Intent i = new Intent(SERVICECMD);
         i.putExtra(CMDNAME, CMDSTART);
         context.sendBroadcast(i);
+    }
+    @Override
+    public String getName() {
+        return context.getString(R.string.music_action);
     }
 }

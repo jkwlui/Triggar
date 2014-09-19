@@ -85,9 +85,13 @@ public class MyActivity extends Activity {
         Profile testProfile = dbExchanger.getProfile(profileId);
         dbExchanger.close();
 
-        if (testProfile != null) {
-            Log.d("testProfile", "id = " + profileId + " profile name: " + testProfile.getName() + " profile state: " + testProfile.getState());
-        }
+        ArrayList<Profile> testProfiles = new ArrayList<Profile>();
+        testProfiles.add(testProfile);
+
+        ProfileArrayAdapter adapter = new ProfileArrayAdapter(this, R.layout.profile_list_item, testProfiles);
+
+        listView = (ListView) findViewById(R.id.profile_listview);
+        listView.setAdapter(adapter);
 
         // Launch Service
 

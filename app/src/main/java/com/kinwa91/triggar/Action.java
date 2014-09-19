@@ -13,6 +13,10 @@ public abstract class Action {
 
     private int state;
 
+    private String name;
+
+    public abstract String getName();
+
     public int getState() {
         return state;
     }

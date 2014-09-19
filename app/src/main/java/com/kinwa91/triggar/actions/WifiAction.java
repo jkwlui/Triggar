@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.wifi.WifiManager;
 
 import com.kinwa91.triggar.Action;
+import com.kinwa91.triggar.R;
 
 /**
  * Created by kinwa91 on 2014-09-16.
@@ -13,5 +14,9 @@ public class WifiAction extends Action {
     public void execute() {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         wifiManager.setWifiEnabled(true);
+    }
+    @Override
+    public String getName() {
+        return context.getString(R.string.wifi_action);
     }
 }
