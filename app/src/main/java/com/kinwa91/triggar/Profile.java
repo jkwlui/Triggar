@@ -52,8 +52,16 @@ public class Profile {
 
     public void trigger(Message msg) {
         for (Trigger t : triggers) {
-            if (t.getId() == msg.arg1)// && t.getState() == msg.arg2)
+            if (t.getId() == msg.arg1 && t.getState() == msg.arg2)
                executeActions();
+        }
+    }
+
+
+    public void trigger(int trigger, int state) {
+        for (Trigger t : triggers) {
+            if (t.getId() == trigger && t.getState() == state)
+                executeActions();
         }
     }
 

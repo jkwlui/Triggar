@@ -1,5 +1,6 @@
 package com.kinwa91.triggar;
 
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.Service;
@@ -19,6 +20,8 @@ import android.os.RemoteException;
 import android.provider.Settings;
 import android.provider.Telephony;
 import android.util.Log;
+
+import java.util.List;
 
 /**
  * Created by kinwa91 on 2014-08-20.
@@ -103,8 +106,8 @@ public class BroadcastService extends Service {
 
     @Override
     public void onDestroy() {
-        unregisterReceiver(receiver);
-        super.onDestroy();
+        Intent serviceIntent = new Intent(getApplicationContext(), BroadcastService.class);
+        getApplicationContext().startService(serviceIntent);
     }
 
     @Override
@@ -113,6 +116,28 @@ public class BroadcastService extends Service {
     }
 
     private void fireEvent(int trigger, int state) {
+        ActivityManager activityManager = (ActivityManager) getApplication().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> services = activityManager.getRunningTasks(Integer.MAX_VALUE);
+        boolean isActivityFound = false;
+
+        for (ActivityManager.RunningTaskInfo rti : services) {
+            if (rti.topActivity.getPackageName().toString().equalsIgnoreCase(getApplication().getPackageName().toString())) {
+                isActivityFound = true;
+                break;
+            }
+        }
+        if (!isActivityFound) {
+
+            Intent dialogIntent = new Intent(this, MyActivity.class);
+            dialogIntent.putExtra("trigger", trigger);
+            dialogIntent.putExtra("state", state);
+            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplication().startActivity(dialogIntent);
+
+        }
+
+
+        Log.d("Service", "Event Fired!" + trigger);
         if (extras != null) {
             Messenger messenger = (Messenger) extras.get(EXTRA_MESSENGER);
             Message msg = Message.obtain();

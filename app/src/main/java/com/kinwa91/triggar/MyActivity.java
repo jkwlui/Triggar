@@ -41,7 +41,7 @@ public class MyActivity extends Activity {
         public void handleMessage(Message msg) {
             // notification code
             Notification.Builder mBuilder =
-                    new Notification.Builder(getApplicationContext())
+                    new Notification.Builder(getApplication())
                             .setSmallIcon(R.drawable.ic_action_network_wifi)
                             .setContentTitle("Triggar Notification")
                             .setContentText("Wifi State Changed:" + msg.arg1 + " " + msg.arg2);
@@ -61,10 +61,17 @@ public class MyActivity extends Activity {
         }
     }
 
+    private void triggerProfiles(int trigger, int state) {
+        for (Profile p : profiles) {
+            p.trigger(trigger, state);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+
 
         context = getApplicationContext();
 
@@ -97,8 +104,19 @@ public class MyActivity extends Activity {
         populateProfileListView();
 
         // Launch Service
+        hack();
 
 
+    }
+
+    private void hack() {
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            int receivedTrigger = intent.getIntExtra("trigger", -1);
+            int receivedState = intent.getIntExtra("state", -1);
+            triggerProfiles(receivedTrigger, receivedState);
+        }
     }
 
     private AlertDialog createDialog(View view, int i, long profileId) {
