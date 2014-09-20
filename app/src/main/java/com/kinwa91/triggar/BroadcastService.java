@@ -31,6 +31,8 @@ public class BroadcastService extends Service {
 
     private Bundle extras;
 
+    private boolean isWifiEnabled;
+
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
 
         @Override
@@ -42,13 +44,18 @@ public class BroadcastService extends Service {
                 int state = Settings.System.getInt(context.getContentResolver(), Settings.Global.AIRPLANE_MODE_ON, 0);
                 fireEvent(0,state);
             } else if (action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)) {
-                int state = intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1);
-                fireEvent(1,state);
-            } else if(action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
+                if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) == BluetoothAdapter.STATE_OFF) {
+                    fireEvent(1,0);
+                } else if (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, -1) == BluetoothAdapter.STATE_ON) {
+                    fireEvent(1,1);
+                }
+            } else if (action.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)) {
                 NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 boolean connected = info.isConnected();
-                int state = connected ? 1 : 0;
-                fireEvent(2,state);
+                if (isWifiEnabled != connected) {
+                    isWifiEnabled = connected;
+                    fireEvent(2,isWifiEnabled? 1:0);
+                }
             } else if (action.equals(Intent.ACTION_POWER_CONNECTED)) {
                 fireEvent(3,1);
             } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
@@ -65,6 +72,9 @@ public class BroadcastService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         this.serviceIntent = intent;
+        NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+        if (info != null)
+            isWifiEnabled = info.isConnected();
         if (serviceIntent != null) {
             this.extras = serviceIntent.getExtras();
         }

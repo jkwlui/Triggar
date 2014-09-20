@@ -68,6 +68,12 @@ public class MyActivity extends Activity {
 //        Profile p = new Profile(t, a);
 //        profiles.add(p);
 
+
+        Intent intent = new Intent(getApplicationContext(), BroadcastService.class);
+        intent.putExtra(BroadcastService.EXTRA_MESSENGER, new Messenger(handler));
+
+        startService(intent);
+
         ProfileDbExchanger dbExchanger = new ProfileDbExchanger(this.getApplicationContext());
         dbExchanger.open();
         int profile1Id = dbExchanger.createProfile("Profile 1", 0);
@@ -89,8 +95,6 @@ public class MyActivity extends Activity {
 
         // Launch Service
 
-        Intent intent = new Intent(getApplicationContext(), BroadcastService.class);
-        intent.putExtra(BroadcastService.EXTRA_MESSENGER, new Messenger(handler));
 
     }
 
@@ -119,7 +123,9 @@ public class MyActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_new_profile) {
+            Intent intent = new Intent(this, NewProfileActivity.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);

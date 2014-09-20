@@ -11,7 +11,7 @@ public abstract class Action {
 
     protected Context context;
 
-    private int state;
+    protected int state;
 
     private String name;
 

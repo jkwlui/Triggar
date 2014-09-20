@@ -12,10 +12,13 @@ public class BluetoothAction extends Action {
     @Override
     public void execute() {
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-        if (adapter.isEnabled()) {
-            adapter.disable();
-        } else {
-            adapter.enable();
+        switch (state) {
+            case 0:
+                adapter.disable();
+                break;
+            case 1:
+                adapter.enable();
+                break;
         }
     }
 
