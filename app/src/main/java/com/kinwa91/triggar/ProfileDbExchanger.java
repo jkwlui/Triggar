@@ -95,7 +95,7 @@ public class ProfileDbExchanger  {
             String name = cursor.getString(cursor.getColumnIndex(ProfileDb.PROFILE_NAME));
             int state = cursor.getInt(cursor.getColumnIndex(ProfileDb.PROFILE_STATE));
 
-            return new Profile(id, name, state, getAllTriggers(id), getAllActions(id));
+            return new Profile(id, name, state, getAllTriggers(id), getAllActions(id), mContext);
         }
         else {
             return null;
@@ -119,7 +119,7 @@ public class ProfileDbExchanger  {
                 String name = cursor.getString(cursor.getColumnIndex(ProfileDb.PROFILE_NAME));
                 int state = cursor.getInt(cursor.getColumnIndex(ProfileDb.PROFILE_STATE));
 
-                profiles.add(new Profile(id, name, state, getAllTriggers(id), getAllActions(id)));
+                profiles.add(new Profile(id, name, state, getAllTriggers(id), getAllActions(id),mContext));
             } while (cursor.moveToNext());
         }
         else {

@@ -1,5 +1,7 @@
 package com.kinwa91.triggar;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Message;
 
@@ -16,16 +18,18 @@ public class Profile {
     private String name;
     private int state;
     private int id;
+    private Context context;
 
     private boolean isTriggered = false;
 
 
-    public Profile(int id, String name, int state, ArrayList<Trigger> triggers, ArrayList<Action> actions) {
+    public Profile(int id, String name, int state, ArrayList<Trigger> triggers, ArrayList<Action> actions, Context context) {
         this.id = id;
         this.name = name;
         this.state = state;
         this.triggers = triggers;
         this.actions = actions;
+        this.context = context;
     }
 
     private void executeActions() {
@@ -60,9 +64,25 @@ public class Profile {
 
     public void trigger(int trigger, int state) {
         for (Trigger t : triggers) {
-            if (t.getId() == trigger && t.getState() == state)
+            if (t.getId() == trigger && t.getState() == state) {
+                sendNotification();
                 executeActions();
+            }
         }
+    }
+
+    private void sendNotification() {
+
+        Notification.Builder mBuilder =
+                new Notification.Builder(context)
+                        .setSmallIcon(R.drawable.ic_action_network_wifi)
+                        .setContentTitle("Triggar Notification")
+                        .setContentText("Profile: \"" + name + "\" is active");
+
+        int mNotificationId = 001;
+        NotificationManager mNotifyMgr =
+                (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        mNotifyMgr.notify(mNotificationId, mBuilder.getNotification());
     }
 
     public String getName() { return name; }

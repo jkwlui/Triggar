@@ -36,6 +36,8 @@ public class BroadcastService extends Service {
 
     private boolean isWifiEnabled;
 
+    private List<Profile> profiles;
+
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
 
         @Override
@@ -102,12 +104,21 @@ public class BroadcastService extends Service {
         intentFilter.addAction(Intent.ACTION_HEADSET_PLUG);
 
         registerReceiver(receiver, intentFilter);
+
+        fetchProfilesFromDatabase();
+    }
+
+    private void fetchProfilesFromDatabase() {
+        ProfileDbExchanger dbExchanger = new ProfileDbExchanger(this.getApplicationContext());
+        dbExchanger.open();
+        profiles = dbExchanger.getAllProfiles();
+        dbExchanger.close();
     }
 
     @Override
     public void onDestroy() {
-        Intent serviceIntent = new Intent(getApplicationContext(), BroadcastService.class);
-        getApplicationContext().startService(serviceIntent);
+        unregisterReceiver(receiver);
+        super.onDestroy();
     }
 
     @Override
@@ -116,40 +127,24 @@ public class BroadcastService extends Service {
     }
 
     private void fireEvent(int trigger, int state) {
-        ActivityManager activityManager = (ActivityManager) getApplication().getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> services = activityManager.getRunningTasks(Integer.MAX_VALUE);
-        boolean isActivityFound = false;
 
-        for (ActivityManager.RunningTaskInfo rti : services) {
-            if (rti.topActivity.getPackageName().toString().equalsIgnoreCase(getApplication().getPackageName().toString())) {
-                isActivityFound = true;
-                break;
-            }
-        }
-        if (!isActivityFound) {
-
-            Intent dialogIntent = new Intent(this, MyActivity.class);
-            dialogIntent.putExtra("trigger", trigger);
-            dialogIntent.putExtra("state", state);
-            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            getApplication().startActivity(dialogIntent);
-
+        for (Profile p : profiles) {
+            p.trigger(trigger,state);
         }
 
 
-        Log.d("Service", "Event Fired!" + trigger);
-        if (extras != null) {
-            Messenger messenger = (Messenger) extras.get(EXTRA_MESSENGER);
-            Message msg = Message.obtain();
-
-            msg.arg1 = trigger;
-            msg.arg2 = state;
-            try {
-                messenger.send(msg);
-            } catch (RemoteException e) {
-                Log.d("BroadcastService", "Messenger Error exception");
-            }
-        }
+//        if (extras != null) {
+//            Messenger messenger = (Messenger) extras.get(EXTRA_MESSENGER);
+//            Message msg = Message.obtain();
+//
+//            msg.arg1 = trigger;
+//            msg.arg2 = state;
+//            try {
+//                messenger.send(msg);
+//            } catch (RemoteException e) {
+//                Log.d("BroadcastService", "Messenger Error exception");
+//            }
+//        }
     }
 
 

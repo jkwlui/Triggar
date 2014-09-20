@@ -13,7 +13,7 @@ import com.kinwa91.triggar.R;
 public class AlarmAction extends Action {
     @Override
     public void execute() {
-        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone r = RingtoneManager.getRingtone(context, notification);
         r.play();
     }

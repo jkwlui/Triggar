@@ -35,37 +35,6 @@ public class MyActivity extends Activity {
     private int MY_ACTIVITY_REQUEST_CODE = 0;
 
     private Context context;
-    // Handler for Service
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            // notification code
-            Notification.Builder mBuilder =
-                    new Notification.Builder(getApplication())
-                            .setSmallIcon(R.drawable.ic_action_network_wifi)
-                            .setContentTitle("Triggar Notification")
-                            .setContentText("Wifi State Changed:" + msg.arg1 + " " + msg.arg2);
-
-            int mNotificationId = 001;
-            NotificationManager mNotifyMgr =
-                    (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            mNotifyMgr.notify(mNotificationId, mBuilder.getNotification());
-
-            triggerProfiles(msg);
-        }
-    };
-
-    private void triggerProfiles(Message msg) {
-        for (Profile p : profiles) {
-            p.trigger(msg);
-        }
-    }
-
-    private void triggerProfiles(int trigger, int state) {
-        for (Profile p : profiles) {
-            p.trigger(trigger, state);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,18 +43,6 @@ public class MyActivity extends Activity {
 
 
         context = getApplicationContext();
-
-//        profiles = new ArrayList<Profile>();
-//        ArrayList<Trigger> t = new ArrayList<Trigger>();
-//        Trigger wt = new BluetoothTrigger();
-//        t.add(wt);
-//        ArrayList<Action> a = new ArrayList<Action>();
-//        Action ba = new BrightnessAction();
-//        ba.setContext(getApplicationContext());
-//        a.add(ba);
-//
-//        Profile p = new Profile(t, a);
-//        profiles.add(p);
 
 
         startBroadcastService();
@@ -103,20 +60,6 @@ public class MyActivity extends Activity {
         });
         populateProfileListView();
 
-        // Launch Service
-        hack();
-
-
-    }
-
-    private void hack() {
-
-        Intent intent = getIntent();
-        if (intent != null) {
-            int receivedTrigger = intent.getIntExtra("trigger", -1);
-            int receivedState = intent.getIntExtra("state", -1);
-            triggerProfiles(receivedTrigger, receivedState);
-        }
     }
 
     private AlertDialog createDialog(View view, int i, long profileId) {
@@ -132,10 +75,8 @@ public class MyActivity extends Activity {
                 db.close();
                 startBroadcastService();
                 populateProfileListView();
-
             }
         });
-
 
         builder.setNegativeButton(R.string.cancel, null);
         return builder.create();
@@ -146,17 +87,15 @@ public class MyActivity extends Activity {
         dbExchanger.open();
         profiles = dbExchanger.getAllProfiles();
         dbExchanger.close();
-
-
         ProfileArrayAdapter adapter = new ProfileArrayAdapter(this, R.layout.profile_list_item, profiles);
-
         listView.setAdapter(adapter);
     }
 
     private void startBroadcastService() {
         Intent intent = new Intent(getApplicationContext(), BroadcastService.class);
-        intent.putExtra(BroadcastService.EXTRA_MESSENGER, new Messenger(handler));
-
+        if (isMyServiceRunning(BroadcastService.class)) {
+            stopService(intent);
+        }
         startService(intent);
     }
 
