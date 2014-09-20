@@ -15,11 +15,13 @@ public class Profile {
     private ArrayList<Action> actions;
     private String name;
     private int state;
+    private int id;
 
     private boolean isTriggered = false;
 
 
-    public Profile(String name, int state, ArrayList<Trigger> triggers, ArrayList<Action> actions) {
+    public Profile(int id, String name, int state, ArrayList<Trigger> triggers, ArrayList<Action> actions) {
+        this.id = id;
         this.name = name;
         this.state = state;
         this.triggers = triggers;
@@ -58,5 +60,7 @@ public class Profile {
     public String getName() { return name; }
 
     public int getState() { return state; }
+
+    public int getId() { return id; }
 
 }

@@ -16,10 +16,17 @@ import java.util.List;
 public class ProfileArrayAdapter extends ArrayAdapter<Profile> {
 
     private int resource;
+    private List<Profile> profiles;
 
     public ProfileArrayAdapter(Context context, int resource, List<Profile> profiles) {
         super(context, resource, profiles);
         this.resource = resource;
+        this.profiles = profiles;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return profiles.get(position).getId();
     }
 
     @Override

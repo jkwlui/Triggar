@@ -2,9 +2,13 @@ package com.kinwa91.triggar;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +17,8 @@ import android.os.Messenger;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -27,6 +33,8 @@ public class MyActivity extends Activity {
     private ListView listView;
 
     private int MY_ACTIVITY_REQUEST_CODE = 0;
+
+    private Context context;
     // Handler for Service
     private Handler handler = new Handler() {
         @Override
@@ -58,6 +66,8 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
+        context = getApplicationContext();
+
 //        profiles = new ArrayList<Profile>();
 //        ArrayList<Trigger> t = new ArrayList<Trigger>();
 //        Trigger wt = new BluetoothTrigger();
@@ -74,11 +84,43 @@ public class MyActivity extends Activity {
         startBroadcastService();
 
         listView = (ListView) findViewById(R.id.profile_listview);
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long profileId) {
+
+
+                AlertDialog dialog = createDialog(view, i, profileId);
+                dialog.show();
+                return true;
+            }
+        });
         populateProfileListView();
 
         // Launch Service
 
 
+    }
+
+    private AlertDialog createDialog(View view, int i, long profileId) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(getString(R.string.delete_profile)+" " + profiles.get(i).getName() + "?");
+        final long deleteId = profileId;
+        builder.setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ProfileDbExchanger db = new ProfileDbExchanger(context);
+                db.open();
+                db.deleteProfile((int) deleteId);
+                db.close();
+                startBroadcastService();
+                populateProfileListView();
+
+            }
+        });
+
+
+        builder.setNegativeButton(R.string.cancel, null);
+        return builder.create();
     }
 
     private void populateProfileListView() {

@@ -31,6 +31,8 @@
     <string name="wifi_action_name">无线网络</string>
     <string name="action_create_new_profile">新增</string>
     <string name="action_new_profile_cancel">取消</string>
+    <string name="delete_profile">刪除 </string>
+    <string name="confirm">確定</string>
 
 
 </resources>
