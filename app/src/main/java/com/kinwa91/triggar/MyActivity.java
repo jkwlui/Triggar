@@ -25,6 +25,8 @@ public class MyActivity extends Activity {
     private ArrayList<Profile> profiles;
     // UI
     private ListView listView;
+
+    private int MY_ACTIVITY_REQUEST_CODE = 0;
     // Handler for Service
     private Handler handler = new Handler() {
         @Override
@@ -69,33 +71,33 @@ public class MyActivity extends Activity {
 //        profiles.add(p);
 
 
-        Intent intent = new Intent(getApplicationContext(), BroadcastService.class);
-        intent.putExtra(BroadcastService.EXTRA_MESSENGER, new Messenger(handler));
+        startBroadcastService();
 
-        startService(intent);
+        listView = (ListView) findViewById(R.id.profile_listview);
+        populateProfileListView();
 
+        // Launch Service
+
+
+    }
+
+    private void populateProfileListView() {
         ProfileDbExchanger dbExchanger = new ProfileDbExchanger(this.getApplicationContext());
         dbExchanger.open();
-        int profile1Id = dbExchanger.createProfile("Profile 1", 0);
-        int trigger1Id = dbExchanger.createTrigger("Wifi", 1, profile1Id);
-        int action1Id = dbExchanger.createAction("Bluetooth", 0, profile1Id);
-
-        int profile2Id = dbExchanger.createProfile("Profile 2", 0);
-        int trigger2Id = dbExchanger.createTrigger("Power", 1, profile2Id);
-        int action2Id = dbExchanger.createAction("Brightness", 0, profile2Id);
-
         profiles = dbExchanger.getAllProfiles();
         dbExchanger.close();
 
 
         ProfileArrayAdapter adapter = new ProfileArrayAdapter(this, R.layout.profile_list_item, profiles);
 
-        listView = (ListView) findViewById(R.id.profile_listview);
         listView.setAdapter(adapter);
+    }
 
-        // Launch Service
+    private void startBroadcastService() {
+        Intent intent = new Intent(getApplicationContext(), BroadcastService.class);
+        intent.putExtra(BroadcastService.EXTRA_MESSENGER, new Messenger(handler));
 
-
+        startService(intent);
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {
@@ -125,9 +127,19 @@ public class MyActivity extends Activity {
         int id = item.getItemId();
         if (id == R.id.action_new_profile) {
             Intent intent = new Intent(this, NewProfileActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, MY_ACTIVITY_REQUEST_CODE);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == MY_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                startBroadcastService();
+                populateProfileListView();
+            }
+        }
     }
 }

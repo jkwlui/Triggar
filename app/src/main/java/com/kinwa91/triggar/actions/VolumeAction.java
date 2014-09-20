@@ -14,8 +14,8 @@ public class VolumeAction extends Action {
     public void execute() {
         AudioManager audioManager =
                 (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-
-        audioManager.setStreamVolume(AudioManager.STREAM_SYSTEM, 0, AudioManager.FLAG_VIBRATE);
+        int max = audioManager.getStreamMaxVolume(audioManager.STREAM_SYSTEM);
+        audioManager.setStreamVolume(AudioManager.STREAM_SYSTEM, state * max / 100, AudioManager.FLAG_SHOW_UI);
 
     }
     @Override

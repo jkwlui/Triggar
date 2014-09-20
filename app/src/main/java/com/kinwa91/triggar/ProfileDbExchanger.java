@@ -123,7 +123,7 @@ public class ProfileDbExchanger  {
             } while (cursor.moveToNext());
         }
         else {
-            return null;
+            return profiles;
         }
 
         cursor.close();
@@ -189,7 +189,7 @@ public class ProfileDbExchanger  {
             Log.d("Trigger", "size:" + triggers.size());
         }
         else {
-            return null;
+            return triggers;
         }
         cursor.close();
 
@@ -243,7 +243,7 @@ public class ProfileDbExchanger  {
             } while (cursor.moveToNext());
         }
         else {
-            return null;
+            return actions;
         }
         cursor.close();
 

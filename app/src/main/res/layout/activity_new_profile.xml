@@ -1,11 +1,261 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context="com.kinwa91.triggar.NewProfileActivity">
+
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.kinwa91.triggar.NewProfileActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_name_edittext"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_alignTop="@+id/textView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_name"
+        android:textSize="20sp"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:paddingTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/triggers"
+        android:textSize="20sp"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/profile_name_edittext"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/airplane_check"
+        android:id="@+id/airplane_checkbox"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wifi_check"
+        android:id="@+id/wifi_checkbox"
+        android:layout_below="@+id/airplane_checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bluetooth_check"
+        android:id="@+id/bluetooth_checkbox"
+        android:layout_below="@+id/wifi_checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/battery_check"
+        android:id="@+id/battery_checkbox"
+        android:layout_below="@+id/bluetooth_checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/headset_check"
+        android:id="@+id/headset_checkbox"
+        android:layout_below="@+id/battery_checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/power_check"
+        android:id="@+id/power_checkbox"
+        android:layout_below="@+id/headset_checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/airplane_switch"
+        android:layout_toRightOf="@+id/airplane_checkbox"
+        android:layout_alignBottom="@+id/airplane_checkbox"
+        android:layout_alignRight="@+id/profile_name_edittext"
+        android:layout_alignEnd="@+id/profile_name_edittext" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/wifi_switch"
+        android:layout_toRightOf="@+id/wifi_checkbox"
+        android:layout_alignBottom="@+id/wifi_checkbox"
+        android:layout_alignRight="@+id/profile_name_edittext"
+        android:layout_alignEnd="@+id/profile_name_edittext" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bluetooth_switch"
+        android:layout_toRightOf="@+id/bluetooth_checkbox"
+        android:layout_alignBottom="@+id/bluetooth_checkbox"
+        android:layout_alignRight="@+id/profile_name_edittext"
+        android:layout_alignEnd="@+id/profile_name_edittext" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/headset_switch"
+        android:layout_toRightOf="@+id/headset_checkbox"
+        android:layout_alignBottom="@+id/headset_checkbox"
+        android:layout_alignRight="@+id/profile_name_edittext"
+        android:layout_alignEnd="@+id/profile_name_edittext" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/power_switch"
+        android:layout_toRightOf="@+id/power_checkbox"
+        android:layout_alignBottom="@+id/power_checkbox"
+        android:layout_alignRight="@+id/profile_name_edittext"
+        android:layout_alignEnd="@+id/profile_name_edittext" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="@string/actions"
+        android:textSize="20sp"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/power_checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/alarm_action_name"
+        android:id="@+id/alarm_action_checkbox"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/bluetooth_action_name"
+        android:id="@+id/bluetooth_action_checkbox"
+        android:layout_below="@+id/alarm_action_checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/brightness_action_name"
+        android:id="@+id/brightness_action_checkbox"
+        android:layout_below="@+id/bluetooth_action_checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/music_action_name"
+        android:id="@+id/music_action_checkbox"
+        android:layout_below="@+id/brightness_action_checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/volume_action_name"
+        android:id="@+id/volume_action_checkbox"
+        android:layout_below="@+id/music_action_checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wifi_action_name"
+        android:id="@+id/wifi_action_checkbox"
+        android:layout_below="@+id/volume_action_checkbox"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bluetooth_action_switch"
+        android:layout_toRightOf="@+id/bluetooth_action_checkbox"
+        android:layout_alignTop="@+id/bluetooth_action_checkbox"
+        android:layout_alignParentRight="true"
+        />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/music_action_switch"
+        android:layout_alignTop="@+id/music_action_checkbox"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/music_action_checkbox"
+        android:layout_toEndOf="@+id/wifi_action_checkbox" />
+
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/wifi_action_switch"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/volume_action_checkbox"
+        android:layout_toRightOf="@+id/wifi_action_checkbox"
+        android:layout_toEndOf="@+id/wifi_action_checkbox" />
+
+    <SeekBar
+        android:paddingLeft="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/volume_seekbar"
+        android:layout_toRightOf="@+id/volume_action_checkbox"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/volume_action_checkbox" />
+
+    <SeekBar
+        android:paddingLeft="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/brightness_seekbar"
+        android:layout_toRightOf="@+id/brightness_action_checkbox"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/brightness_action_checkbox" />
+
 
 </RelativeLayout>
+</ScrollView>

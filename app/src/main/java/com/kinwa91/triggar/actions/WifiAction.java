@@ -13,7 +13,11 @@ public class WifiAction extends Action {
     @Override
     public void execute() {
         WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        wifiManager.setWifiEnabled(true);
+        if (state == 0) {
+            wifiManager.setWifiEnabled(false);
+        } else if (state == 1) {
+            wifiManager.setWifiEnabled(true);
+        }
     }
     @Override
     public String getName() {

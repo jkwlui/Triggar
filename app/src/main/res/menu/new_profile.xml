@@ -1,8 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.kinwa91.triggar.NewProfileActivity" >
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
+    <item android:id="@+id/action_new_profile_create"
+        android:title="@string/action_create_new_profile"
+        android:icon="@drawable/ic_action_accept"
+        android:orderInCategory="2"
+        android:showAsAction="always" />
+
+    <item android:id="@+id/action_new_profile_cancel"
+        android:title="@string/action_new_profile_cancel"
+        android:icon="@drawable/ic_action_cancel"
+        android:orderInCategory="1"
+        android:showAsAction="always" />
 </menu>

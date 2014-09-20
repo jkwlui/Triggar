@@ -37,7 +37,7 @@ public class ProfileArrayAdapter extends ArrayAdapter<Profile> {
         String actionsListText = "";
         Log.d("Action size: ", ""+actionsList.size());
         for (Action a : actionsList)
-            actionsListText = actionsListText + a.getName() + ", ";
+            actionsListText = actionsListText + a.getName() + ":" + a.getState() +", ";
         actions.setText(actionsListText);
         return convertView;
     }

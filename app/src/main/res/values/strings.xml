@@ -13,5 +13,24 @@
     <string name="volume_action">Set Volume</string>
     <string name="wifi_action">Set Wifi</string>
     <string name="title_activity_new_profile">NewProfileActivity</string>
+    <string name="profile_name">设置名称</string>
+    <string name="triggers">触发</string>
+    <string name="airplane_check">飞行模式</string>
+    <string name="wifi_check">无线网络</string>
+    <string name="bluetooth_check">蓝牙连接</string>
+    <string name="battery_check">电量：低</string>
+    <string name="headset_check">耳机：插入</string>
+    <string name="power_check">充电模式</string>
+    <string name="actions">动作设置</string>
+    <string name="cancel">取消</string>
+    <string name="alarm_action_name">声音提示</string>
+    <string name="bluetooth_action_name">蓝牙设置</string>
+    <string name="brightness_action_name">亮度设置</string>
+    <string name="music_action_name">音乐播放</string>
+    <string name="volume_action_name">音量设置</string>
+    <string name="wifi_action_name">无线网络</string>
+    <string name="action_create_new_profile">新增</string>
+    <string name="action_new_profile_cancel">取消</string>
+
 
 </resources>

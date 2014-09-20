@@ -25,9 +25,12 @@ public class MusicAction extends Action {
     @Override
     public void execute() {
         AudioManager mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-
         Intent i = new Intent(SERVICECMD);
-        i.putExtra(CMDNAME, CMDSTART);
+        if (state == 1) {
+            i.putExtra(CMDNAME, CMDSTART);
+        } else {
+            i.putExtra(CMDNAME, CMDSTOP);
+        }
         context.sendBroadcast(i);
     }
     @Override

@@ -27,7 +27,7 @@ public class BroadcastService extends Service {
 
     public final static String EXTRA_MESSENGER = "com.kinwa91.triggar.EXTRA_MESSAGER";
 
-    private Intent serviceIntent;
+    private Intent serviceIntent = null;
 
     private Bundle extras;
 
@@ -71,8 +71,12 @@ public class BroadcastService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        this.serviceIntent = intent;
-        NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+        NetworkInfo info = null;
+        if (intent != null) {
+            this.serviceIntent = intent;
+
+            info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
+        }
         if (info != null)
             isWifiEnabled = info.isConnected();
         if (serviceIntent != null) {
